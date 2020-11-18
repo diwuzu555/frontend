@@ -1,18 +1,15 @@
-
-
-
-
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import router from './router';
+
 Vue.use(ElementUI);
 
 new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+    el: '#app',
+    router,
+    render: h => h(App)
 });
 
 
@@ -38,14 +35,16 @@ new Vue({
 
 
 
-{/* <template>
-  <div id="app">
-    <router-view/>
-  </div>
-</template>
+{
+    /* <template>
+      <div id="app">
+        <router-view/>
+      </div>
+    </template>
 
-<script>
-export default {
-  name: 'App'
+    <script>
+    export default {
+      name: 'App'
+    }
+    </script> */
 }
-</script> */}

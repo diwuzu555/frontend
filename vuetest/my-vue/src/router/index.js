@@ -1,17 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import register from '@/components/register'
 import HelloWorld from '@/components/HelloWorld'
-
+import changePersonalImfornation from '@/components/changePersonalImfornation'
+import sign from '@/components/sign'
 Vue.use(Router)
 
-export default  new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+export default new Router({
+    routes: [{
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld
+        },
+
+
+        {
+            path: '/register',
+            name: 'register',
+            component: register
+        },
+
+        {
+            path: '/changePersonalImfornation',
+            name: 'changePersonalImfornation',
+            component: changePersonalImfornation
+        },
+
+        {
+            path: '/sign',
+            name: 'sign',
+            component: sign
+        },
+
+    ]
 });
 
 
@@ -29,4 +50,3 @@ export default  new Router({
 // });
 
 // export default router;
-
