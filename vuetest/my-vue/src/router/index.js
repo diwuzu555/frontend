@@ -6,6 +6,7 @@ import changePersonalImfornation from '@/components/changePersonalImfornation'
 import sign from '@/components/sign'
 import Account from '@/components/Account' //账户管理页面
 import AccountInq from '@/components/AccountInq' //账户管理查询页面
+import Issue_report_form from '@/components/Issue_report_form'
 Vue.use(Router)
 
 export default new Router({
@@ -42,6 +43,11 @@ export default new Router({
             path: '/AccountInq',
             name: 'AccountInq',
             component: AccountInq
+        },
+        {
+            path: '/Issue_report_form',
+            name: 'Issue_report_form',
+            component: Issue_report_form
         },
 
 
