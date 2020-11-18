@@ -26,7 +26,7 @@
    </div></el-col>
   
  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
-  <el-button type="primary" >账号管理</el-button>
+  <router-link to='/Account' ><el-button type="primary" >账号管理</el-button></router-link>
    </div></el-col>
     <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple">
    
