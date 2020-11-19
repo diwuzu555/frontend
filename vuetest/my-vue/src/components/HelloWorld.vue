@@ -20,7 +20,7 @@
 
   <el-header class="header1">
   <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
-    <el-button type="primary" >创建新Issue</el-button>
+    <router-link to='/HelloWorld_xinIssue' ><el-button type="primary" >创建新Issue</el-button></router-link>
    </div></el-col>
  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
    <router-link to='/Issue_report_form' ><el-button type="primary" >Issue报表</el-button></router-link>

@@ -8,6 +8,7 @@ import Account from '@/components/Account' //账户管理页面
 import AccountInq from '@/components/AccountInq' //账户管理查询页面
 import Issue_report_form from '@/components/Issue_report_form'
 import list from '@/components/list'
+import HelloWorld_xinIssue from '@/components/HelloWorld_xinIssue'
 
 Vue.use(Router)
 
@@ -55,6 +56,11 @@ export default new Router({
             path: '/list',
             name: 'list',
             component: list
+        },
+        {
+            path: '/HelloWorld_xinIssue',
+            name: 'HelloWorld_xinIssue',
+            component: HelloWorld_xinIssue
         },
 
     ]
