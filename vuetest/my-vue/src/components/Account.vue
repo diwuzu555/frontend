@@ -1,6 +1,6 @@
 <template>
-<div>
-
+<!-- 账户管理页面 -->
+<div>   
 <el-header class="header1">
   <h2>查询</h2>
 </el-header>

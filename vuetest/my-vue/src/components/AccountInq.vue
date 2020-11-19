@@ -54,7 +54,7 @@
           type="danger"
           @click="handleEdit(scope.$index, scope.row)">注销</el-button>
         <el-button
-          size="mini"
+          size="mini" plain v-if="scope.row.buttonVisible"
           @click="handleDelete(scope.$index, scope.row)">经理</el-button>
       </template>
     </el-table-column>
@@ -66,7 +66,7 @@
    @size-change="handleSizeChange" 
    @current-change="handleCurrentChange" 
    :current-page="currentPage" 
-   :page-sizes="pageSizes" 
+   :page-sizes="20" 
    :page-size="PageSize" layout="total, sizes, prev, pager, next, jumper" 
    :total="tableData.length">
   
@@ -89,12 +89,8 @@
            tableData:[],
            // 默认显示第几页
            currentPage:1,
-           // 总条数，根据接口获取数据长度(注意：这里不能为空)
-           
-           // 个数选择器（可修改）
-           pageSizes:[2,4],
            // 默认每页显示的条数（可修改）
-           PageSize:2,
+           PageSize:20,
         tableData: [{
           num:'1',
           id: '001',
@@ -103,8 +99,19 @@
           time:'2016-05-02',
           body:'普通用户',
           status:'激活',
-          scope:''
-
+          scope:'',
+          buttonVisible:true,
+        }, 
+        {
+          num:'1',
+          id: '001',
+          name: '王小虎',
+          mail: 'xxxxx@qq.com',
+          time:'2016-05-02',
+          body:'经理',
+          status:'激活',
+          scope:'',
+          buttonVisible:false,
         }, 
         {
           num:'1',
@@ -114,19 +121,8 @@
           time:'2016-05-02',
           body:'普通用户',
           status:'激活',
-          scope:''
-
-        }, 
-        {
-          num:'1',
-          id: '001',
-          name: '王小虎',
-          mail: 'xxxxx@qq.com',
-          time:'2016-05-02',
-          body:'普通用户',
-          status:'激活',
-          scope:''
-
+          scope:'',
+          buttonVisible:true,
         }, 
         ]
       }

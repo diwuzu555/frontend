@@ -14,283 +14,38 @@
  <router-link to='/changePersonalImfornation' > <el-button type="success" size="small">修改个人信息</el-button></router-link>
   </div></el-col>
   </el-row>
-  <el-header>
-   <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple">
-    
-   </div></el-col>
+
+   <div class="grid-content bg-purple" style="margin:=0px auto">
+   </div>
+
+  <el-header class="header1">
   <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
     <el-button type="primary" >创建新Issue</el-button>
    </div></el-col>
  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
    <router-link to='/Issue_report_form' ><el-button type="primary" >Issue报表</el-button></router-link>
    </div></el-col>
-  
  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
   <router-link to='/Account' ><el-button type="primary" >账号管理</el-button></router-link>
    </div></el-col>
-    <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple">
-   
+   <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
+  <router-link to='/list' ><el-button type="primary" >Issue查询</el-button></router-link>
    </div></el-col>
   </el-header>
-  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple">
-  
-   </div></el-col>
-   Issue查询
-   <el-divider></el-divider>
 
+  
  <!-- 表单 -->
-
- <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple" style="text-align:center">
-    <el-form-item label="Issue No">
-    <el-input v-model="formInline.user" placeholder=""></el-input>
-  </el-form-item>
-   </div></el-col>
-
-
-
- <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="Issue 状态">
-    <el-select v-model="formInline.region" placeholder="">
-      <el-option label="区域一" value="shanghai"></el-option>
-      <el-option label="区域二" value="beijing"></el-option>
-    </el-select>
-  </el-form-item>
-   </div></el-col>
-
-
-   <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="创建时间">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </el-form-item>
-   </div></el-col>
- 
-  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="至">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </el-form-item>
-   </div></el-col>
-   
-
-   <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple">
-    
-   </div></el-col>
-   
- </el-form>
-
-
-
- <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple" style="text-align:center">
-    <el-form-item label="创建人">
-    <el-input v-model="formInline.user" placeholder=""></el-input>
-  </el-form-item>
-   </div></el-col>
-
-
-
- <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="修改人">
-    <el-select v-model="formInline.region" placeholder="John Doe">
-      <el-option label="区域一" value="shanghai"></el-option>
-      <el-option label="区域二" value="beijing"></el-option>
-    </el-select>
-  </el-form-item>
-   </div></el-col>
-
-
-   <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="修改时间">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </el-form-item>
-   </div></el-col>
- 
-  <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
- <el-form-item label="至">
-    <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-  </el-form-item>
-   </div></el-col>
-   
-
-   <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6"><div class="grid-content bg-purple">
-    
-   </div></el-col>
-   
-   
-   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center">
-   <el-button type="primary">查询</el-button>
-    <el-button type="primary">清空</el-button>
-   </div></el-col>
-   </el-form>
- <!-- 表格 -->
- <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple">
   
-   </div></el-col>
- Issue 列表
+ <!-- 表格 -->
+ 
+ <!-- Issue 列表
   <el-divider></el-divider>
  
  <div class="grid-content bg-purple" style="margin:0px auto">
   
   
-  <el-table
-    :data="tableData"
-    style="width: 100%;border:1px solid #0094ff;" >
-
-    <el-table-column
-      label="序号"
-      width="180" >
-      <template slot-scope="scope">
-        <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ scope.row.Number }}</span>
-      </template>
-    </el-table-column>
-
-
-
-    <el-table-column
-      label="Issue ID"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-           <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.IssueID }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
- <el-table-column
-      label="Issue 标题"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.IssueTitle }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="创建人"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.Creater }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="创建时间"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.CreationTime }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="修改人"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.Reviser }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="Issue 状态"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.IssueStatus }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="计划完成时间"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.ExpectedFinishTime }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="实际完成时间"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>创建人: {{ scope.row.Creater }}</p>
-          <p>Issue状态: {{ scope.row.IssueStatus }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.ActualFinishTime }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-   </div>
+ 
+   </div> -->
    
  </el-container>
 
@@ -300,35 +55,19 @@
 export default {
   data() {
     return {
-      formInline: {
-          user: '',
-          region: ''
-        }
-        ,
-         tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          Number :'1',
-          IssueID :'1234',
-          IssueTitle:'哈哈哒',
-          Creater:'小明',
-          Creationtime:'2016-05-01',
-          Reviser:'小红',
-          IssueStatus:'block',
-          ExpectedFinishTime:'2016-05-10',
-          ActualFinishTime:'2016-05-8',
-          操作:''
-        }]
+
+       form:{
+        text1: '',
+        region:'',
+        text3: '',
+        text4:'',
+        textarea: '',
+        value1: '',
+        value2: '',
+        value3: '',
+        value4: ''
+       } ,
+       
 
     };
   },
@@ -342,16 +81,11 @@ export default {
       handleDelete(index, row) {
         console.log(index, row);
       },
-      //表格
-      tableRowClassName({row, rowIndex}) {
-        if (rowIndex === 1) {
-          return 'warning-row';
-        } else if (rowIndex === 3) {
-          return 'success-row';
-        }
-        return '';
+      
+
+    resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
-    
   }
 };
 </script>
@@ -410,5 +144,10 @@ export default {
   .el-table .success-row {
     background: #f0f9eb;
   }
+.buttomInq,.row,.header1 {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
 
+}
 </style>
