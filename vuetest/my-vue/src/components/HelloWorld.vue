@@ -4,13 +4,15 @@
  <el-container>
  <el-header style="font-size: 50px">GBA Issue管理系统</el-header>
  
-  
+  <!-- <el-button type="primary" size="small" @click="xixi">注册aa</el-button> -->
   
   <el-row :gutter="10">
   <el-col :xs="24" :sm="24" :md="16" :lg="12" :xl="12"><div class="grid-content bg-purple">
    <router-link to='/register' ><el-button type="primary" size="small">注册</el-button></router-link>
    <router-link to='/sign' ><el-button type="primary" size="small" >登录</el-button></router-link>
-  /Welcome John Doe!
+  <template v-if="$store.state.signed">
+    /Welcome John Doe!
+  </template> 
  <router-link to='/changePersonalImfornation' > <el-button type="success" size="small">修改个人信息</el-button></router-link>
   </div></el-col>
   </el-row>
@@ -53,10 +55,13 @@
 
 <script>
 export default {
+
   data() {
     return {
+      // shishi:'hhh',
 
        form:{
+        
         text1: '',
         region:'',
         text3: '',
@@ -65,7 +70,8 @@ export default {
         value1: '',
         value2: '',
         value3: '',
-        value4: ''
+        value4: '',
+        
        } ,
        
 
@@ -81,6 +87,12 @@ export default {
       handleDelete(index, row) {
         console.log(index, row);
       },
+      // xixi(){
+      //   // return this.$store.state.signed;
+      //   console.log(this.$data.shishi) ;
+
+      // },
+      
       
 
     resetForm(formName) {

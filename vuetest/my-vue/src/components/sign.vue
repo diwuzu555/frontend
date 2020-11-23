@@ -16,8 +16,12 @@
    输入密码：<el-input v-model="signPassword" placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-  <el-button type="primary" @click="getuser">确认</el-button>
+  <el-button type="primary"  @click="getuser">确认</el-button>
+  
+  <el-button type="primary" @click="$store.commit('sign')">试水</el-button>
+  <el-button type="primary" @click="signSuccess">试水1</el-button>
    </div></el-col>
+
   
   
 </el-row>
@@ -43,13 +47,23 @@ import axios from "axios";
        getuser(){
         axios.get('api/user/getUserById', { params: { id: this.signId } }).then(res => {
         if(res.data.password==this.signPassword)
-        {alter("登录成功");}
+        {alter("登录成功");
+        this.$store.commit('sign');
+        this.$router.push('/');
+       
+        }
         else
         {alert("登录失败");}
         }).catch(err => {
         console.log(err);
        });
       },
+      signSuccess(){
+        if(this.$store.state.signed==true)
+        {this.$router.push('/');
+        console.log('成功')}
+      }
+      
 
      
     }
