@@ -1,283 +1,132 @@
 <template>
+  <div>
+      <el-header>
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <div class="grid-content bg-purple">
+            Issue 报表
+          </div>
+        </el-col>
+      </el-header>
 
-<el-container>
-  <el-header>
-    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-      <div class="grid-content bg-purple">
-        Issue 报表
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <div class="grid-content bg-purple">
+          查询条件
+        </div>             
+      </el-col>
+      <el-divider></el-divider>
+    
+      <div :inline="true">
+        用户ID
+        <el-input v-model="searchId" placeholder="用户Id" style="width:240px"></el-input>
+        用户姓名
+        <el-input v-model="searchName" placeholder="用户姓名" style="width:240px"></el-input>
       </div>
-    </el-col>
-  </el-header>
+      <div align='center'>
+        <el-button type="primary" @click="getList1">查询</el-button>
+        <el-button @click="clearall">清空</el-button>
+      </div>
 
+      <el-divider></el-divider>
 
-    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-      <div class="grid-content bg-purple">
-        查询条件
-      </div>             
-    </el-col>
-   
-   <el-divider></el-divider>
+        统计报表
+      <el-divider></el-divider>
 
-<!-- 表单 -->
-<el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-  <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-    <div class="grid-content bg-purple" style="text-align:center">
-      <el-form-item label="用户ID">
-      <el-input v-model="formInline.user" placeholder="请输入用户ID" maxlength="30"></el-input>
-      </el-form-item>
-    </div>
-  </el-col>
-
-  <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-    <div class="grid-content bg-purple" style="text-align:center">
-      <el-form-item label="用户姓名">
-      <el-input v-model="formInline.region" placeholder="请输入用户姓名" maxlength="30"></el-input>
-      </el-form-item>
-    </div>
-  </el-col>
-   
-
-
-  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-    <div class="grid-content bg-purple" style="text-align:center">
-      <el-button type="primary">查询</el-button>
-      <el-button v-on:click="resetForm('formInline')">清空</el-button>
-    </div>
-  </el-col>
-</el-form>
-
-<!-- 表格 -->
-  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-    <div class="grid-content bg-purple">
-    </div>
-  </el-col>
-    统计报表
-<el-divider></el-divider>
- 
-
-<div class="grid-content bg-purple" style="margin:0px auto">
-  <el-table
-    :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-    style="width: 100%;border:1px solid #0094ff;" >
-    
-    <el-table-column
-      label="□"
-      width="100">
-      <el-checkbox v-model="checked"></el-checkbox>
-    </el-table-column>
-
-    <el-table-column
-      type="index" 
-      label="序号"
-      width="180">
-    </el-table-column>
-
-    <el-table-column
-      label="用户ID"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="用户姓名"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="创建Issue数"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="收到Issue数"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="修改Issue数"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      label="完成率"
-      width="180">
-      <template slot-scope="scope">
-        <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.address }}</p>
-          <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-          </div>
-        </el-popover>
-      </template>
-    </el-table-column>
-
-  </el-table>
-    
-</div>
-   <div class="pagination-container">
+    <el-table :data="tableDataEnd">
+      <el-table-column label="□"></el-table-column>
+      <el-table-column type="index" label="序号"></el-table-column>
+      <el-table-column label="用户ID" prop="issueId"></el-table-column>
+      <el-table-column label="用户姓名" prop="founder"></el-table-column>
+      <el-table-column label="创建Issue数" prop="create_number"></el-table-column>
+      <el-table-column label="收到Issue数" prop="receive_number"></el-table-column>
+      <el-table-column label="修改Issue数" prop="update_number"></el-table-column>
+      <el-table-column label="完成率" prop="completion_rate"></el-table-column>
+    </el-table>
     <el-pagination
-      :background="background"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      :page-sizes="pageSizes"
-      :layout="layout"
-      :total="tableData.length"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"/>
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[1,2]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalItems">
+    </el-pagination>
   </div>
-</el-container>
-
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-        tableData:[],
-        currentPage:1,
-        PageSize:1,
-        formInline: {
-          user: '',
-          region: ''
-        }
-        ,
-        tableData: [{
-          date: '2016-05-02',
-          name: '张三',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '李四',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王五',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '赵六',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
-        
-    };
-  },
-  props: {
-    total: {
-      required: true,
-      type: Number
+import axios from "axios";
+  export default {
+    data() {
+      return {
+        searchId: "",
+        searchName:"",
+        tableDataEnd: [],
+        currentPage: 1,
+        pageSize: 1,
+        totalItems: 0,
+      };
     },
-    page: {
-      type: Number,
-      default: 1
-    },
-    limit: {
-      type: Number,
-      default: 20
-    },
-    pageSizes: {
-      type: Array,
-      default() {
-        return [20]
-      }  
-    },
-    layout: {
-      type: String,
-      default: 'total, sizes, prev, pager, next, jumper'
-    },
-    background: {
-      type: Boolean,
-      default: true
+
+    //页面初始数据
+    // created(){
+    //   this.getlistIssue();
+    // },
+
+    methods: {
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.pageSize = val;
+        // this.handleCurrentChange(this.currentPage);
+        this.currentPage=1
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.currentPage = val;
+      },
+      getList1(){
+        axios
+        .get('api/issue/queryIssue',{ params: { userId1: this.searchId } })
+        .then(res => {
+                
+          this.tableDataEnd=res.data;
+          console.log('kaishi');
+          console.log(this.tableDataEnd);
+          
+          this.$message({
+            message: '查询成功',
+            type: 'success'
+          })
+          }).catch(err => {
+            this.$message({
+              message: '查询失败',
+              type: 'warning'
+            });
+            console.log("...err...",err)
+          });
+      },
+      //获取所有数据
+      getlistIssue() {
+        axios
+        .get('api/issue/listIssue')
+        .then(res => {
+          console.log(res.data[0]); 
+          this.totalItems=res.data.length;
+          this.tableDataEnd=res.data;
+        })
+        .catch(err=>{
+          this.$message({
+            message: '列表数据获取失败',
+            type: 'warning'
+          });
+          console.log("...err...",err)
+        })               
+      },
+      //清空按钮及重获所有数据
+      clearall(){
+        this.searchId="";
+        this.searchName="";
+        this.getlistIssue();
+      }
     }
-  },
-  computed: {
-    currentPage: {
-      get() {
-        return this.page;
-      },
-      set(val) {
-        this.$emit('update:page', val);
-      }
-    },
-    pageSize: {
-      get() {
-        return this.limit;
-      },
-      set(val) {
-        this.$emit('update:limit', val);
-      }
-    },
-
-  },
-  methods: {
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    handleSizeChange(val) {
-      this.PageSize=val
-      this.currentPage=1
-    },
-    handleCurrentChange(val) {
-      this.currentPage=val
-    },  
-  },
-};
+  };
 </script>
-
-
-<style>
-  .el-header, .el-footer {
-    color: #333;
-    text-align: center;
-    line-height: 60px;
-  }
-  .pagination-container {
-  background: #fff;
-  padding: 32px 16px;
-}
-</style>
