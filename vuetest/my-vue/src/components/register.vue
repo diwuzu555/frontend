@@ -56,7 +56,7 @@ import axios from "axios";
     methods: {
         postuser(){
            var patt1=new RegExp("^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$");
-         if(patt1.test(this.signPassword))
+         if(patt1.test(this.savePassword))
          {
           if(this.savePassword!=this.save2Password)
           { 

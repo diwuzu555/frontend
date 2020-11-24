@@ -5,7 +5,7 @@ import HelloWorld from '@/components/HelloWorld'
 import changePersonalImfornation from '@/components/changePersonalImfornation'
 import sign from '@/components/sign'
 import Account from '@/components/Account' //账户管理页面
-import AccountInq from '@/components/AccountInq' //账户管理查询页面
+
 import Issue_report_form from '@/components/Issue_report_form'
 import list from '@/components/list'
 import HelloWorld_xinIssue from '@/components/HelloWorld_xinIssue'
@@ -42,11 +42,7 @@ export default new Router({
             name: 'Account',
             component: Account
         },
-        {
-            path: '/AccountInq',
-            name: 'AccountInq',
-            component: AccountInq
-        },
+
         {
             path: '/Issue_report_form',
             name: 'Issue_report_form',

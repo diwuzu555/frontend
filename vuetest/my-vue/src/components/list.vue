@@ -14,8 +14,9 @@
   <el-col :span="6"><div><el-form-item label="issue NO:" prop="text1"> <el-input type="text" placeholder="请输入内容" v-model="form.text1"  maxlength="30" show-word-limit >
     </el-input></el-form-item></div></el-col>
     <el-col :span="6"><div><el-form-item label="issue状态:" prop="region"> <el-select v-model="form.region" placeholder="活动区域">
-      <el-option label="区域一" value="shanghai"></el-option>
-      <el-option label="区域二" value="beijing"></el-option>
+      <el-option label="待解决" value="待解决"></el-option>
+      <el-option label="待验证" value="待验证"></el-option>
+      <el-option label="已关闭" value="已关闭"></el-option>
     </el-select></el-form-item></div></el-col>
     <el-col :span="4"><div><el-form-item label="创建时间:" prop="value1"> <el-date-picker
       v-model="form.value1"
@@ -43,7 +44,7 @@
  </div>
     <el-footer class="header1">
       <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
-    <el-button type="primary">查询</el-button>
+    <el-button type="primary" @click="submitForm">查询</el-button>
      </div></el-col>
      <el-col :xs="24" :sm="24" :md="8" :lg="4" :xl="4"><div class="grid-content bg-purple">
     <el-button type="primary"  @click="resetForm('form')">清空</el-button>
@@ -67,7 +68,7 @@
   </template>
 </el-table-column>
     <el-table-column
-      prop="id"
+      prop="issueId"
       label="IssueID"
       >
     </el-table-column>
@@ -77,26 +78,47 @@
      >
     </el-table-column>
     <el-table-column
-      prop="name1"
+      prop="founder"
       label="创建人"
       >
     </el-table-column>
     <el-table-column
-      prop="time"
+      prop="iCreateTime"
       label="创建时间"
       >
     </el-table-column>
     <el-table-column
-      prop="name2"
+      prop="reviser"
       label="修改人"
       >
     </el-table-column>
     <el-table-column
-      prop="status"
+      prop="issueStatus"
       label="Issue状态"
       >
     </el-table-column>
-   
+    <el-table-column
+      prop="planTime"
+      label="计划完成时间"
+      >
+    </el-table-column>
+   <el-table-column
+      prop="actualTime"
+      label="实际完成时间"
+      >
+    </el-table-column>
+    <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="Details(scope.$index, scope.row)">详情</el-button>
+        <el-button
+          size="mini" 
+          type="danger"
+           plain v-if="scope.row.issueStatus=='待解决'||scope.row.issueStatus=='待验证'"
+          @click="Edit(scope.$index, scope.row)">修改</el-button>
+      </template>
+    </el-table-column>
   </el-table>
  
 </el-main>
@@ -105,22 +127,19 @@
    @size-change="handleSizeChange" 
    @current-change="handleCurrentChange" 
    :current-page="currentPage" 
-   :page-sizes="20" 
+   :page-sizes="[20]" 
    :page-size="PageSize" layout="total, sizes, prev, pager, next, jumper" 
-   :total="tableData.length">
+   :total="total">
   
 </el-pagination>
 </el-footer>
-  
-  
-</div>
 
+</div>  
 
-  
 </template>
 
 <script>
-
+import axios from 'axios';
  export default {
     data() {
       return {
@@ -130,7 +149,7 @@
            currentPage:1,
            // 默认每页显示的条数（可修改）
            PageSize:20,
-
+           total:0,
             form:{
         text1: '',
         region:'',
@@ -142,47 +161,64 @@
         value3: '',
         value4: ''
        } ,
-        tableData: [{
-          id: '001',
-          title:'xx',
-          name1: '王小虎',
-          time:'2016-05-02',
-          name2: '王小虎',
-          status:'激活',
-          scope:'',
-        }, 
-        {
-          id: '001',
-          title:'xx',
-          name1: '王小虎',
-          time:'2016-05-02',
-          name2: '王小虎',
-          status:'激活',
-          scope:'',
-        }, 
-        {
-         id: '001',
-          title:'xx',
-          name1: '王小虎',
-          time:'2016-05-02',
-          name2: '王小虎',
-          status:'激活',
-          scope:'',
-        }, 
-        ]
+       
       }
     },
-    methods: {
-      handleEdit() {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+
+     created(){
+        this.getTabelInfo()
       },
+
+    methods: {
+
+      getTabelInfo(){
+            
+             // let _that = this;
+            axios.post('/api/issue/listIssue')
+                .then(response =>{
+                    this.total=response.data.length;
+                    this.tableData = response.data;
+                    console.log(response.data)
+                  
+                   
+            }).catch(err=>{
+                this.$message({
+                    message: '列表数据获取失败',
+                    type: 'success'
+                });
+            })
+        },
+
+    submitForm() {  
+      // let data = {"issueId":this.form.text1,
+      //       "founder":this.form.text3,
+      //       "issueStatus": "this.form.region",
+      //       "reviser":this.form.text4};
+            axios.get('/api/issue/queryIssue', 
+            {
+          params: {
+            issueId:this.form.text1,
+            founder:this.form.text3,
+            issueStatus: this.form.region,
+            reviser:this.form.text4,
+
+           }
+         })
+             
+                .then(response =>{
+                  this.tableData=[];
+                  this.total=response.data.length;
+                    this.tableData.push(response.data);
+                    console.log(response.data)
+            }).catch(err=>{
+                this.$message({
+                    message: '列表数据获取失败',
+                    type: 'success'
+                });
+            })
+       },
+
+      
        getData(){
              // 这里使用axios，使用时请提前引入
              axios.post(url,{
@@ -211,6 +247,7 @@
            // 改变默认的页数
            this.currentPage=val
        },
+
         created:function(){
          this.getData() 
    },
