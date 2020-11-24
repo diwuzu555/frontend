@@ -10,19 +10,19 @@
   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" ><div class="grid-content bg-purple" style="margin-bottom:50px" ></div></el-col>
   
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" ><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   登录ID：<el-input v-model="changeId" placeholder="请输入内容" style="width:300px"></el-input>
+   登录ID：<el-input disabled="true" v-model="changeId" maxLength=30 placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   姓名：<el-input v-model="changeName" placeholder="请输入内容" style="width:300px"></el-input>
+   姓名：<el-input v-model="changeName" maxLength=20 placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   邮箱：<el-input v-model="changeEmail" placeholder="请输入内容" style="width:300px"></el-input>
+   邮箱：<el-input v-model="changeEmail" maxLength=30 placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   修改密码：<el-input v-model="changePassword" placeholder="请输入内容" style="width:300px"></el-input>
+   修改密码：<el-input v-model="changePassword" maxLength=30 placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   确认密码：<el-input v-model="change2Password" placeholder="请输入内容" style="width:300px"></el-input>
+   确认密码：<el-input v-model="change2Password" maxLength=30 placeholder="请输入内容" style="width:300px"></el-input>
    </div></el-col>
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
   <el-button type="primary" @click="changeInformation">确认</el-button>
@@ -52,16 +52,31 @@ import axios from "axios";
       }
     },
     methods: {
+      
+         
        changeInformation(){
-         let data={"id":this.changeId,"password":this.changePassword,"email":this.changeEmail,"username":this.changeName};
-        axios.put('api/user/updateUserById', data).then(res => {
-        alert("修改成功");
+          if(this.changePassword!=this.change2Password)
+       {
+            alert("密码不一致");
+            
+          }
+           else
+          {
+         let data={"userId":this.changeId,"password":this.changePassword,"email":this.changeEmail,"name":this.changeName};
+        axios.put('api/user/updateUser', data).then(res => {
+         
+            alert("修改成功");
+          this.$router.push('/');
+          
+      
         }).catch(err => {
         alert("修改失败");
        });
-      },
+      }
      
+    
     }
+  }
   }
 </script>
 

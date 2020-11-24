@@ -3,18 +3,23 @@ import Vuex from 'vuex';
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-      signed: false,
-      
+        signed: false,
+        signedUsername: ''
+
     },
     mutations: {
-      sign(){
-        this.state.signed=true;
-        console.log("登录成功");
-      },
-      
-     
-      
+        sign(state, username) {
+            this.state.signed = true;
+            this.state.signedUsername = username;
+
+            console.log("登录成功");
+            console.log(this.state.signedUsername);
+
+        },
+
+
+
     }
-  })
- 
-  export default store;
+})
+
+export default store;

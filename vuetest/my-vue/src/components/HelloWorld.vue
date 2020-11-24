@@ -8,12 +8,12 @@
   
   <el-row :gutter="10">
   <el-col :xs="24" :sm="24" :md="16" :lg="12" :xl="12"><div class="grid-content bg-purple">
-   <router-link to='/register' ><el-button type="primary" size="small">注册</el-button></router-link>
-   <router-link to='/sign' ><el-button type="primary" size="small" >登录</el-button></router-link>
+   <router-link to='/register' ><el-button v-if="!$store.state.signed" type="primary"  size="small">注册</el-button></router-link>
+   <router-link to='/sign' ><el-button v-if="!$store.state.signed" type="primary" size="small" >登录</el-button></router-link>
   <template v-if="$store.state.signed">
-    /Welcome John Doe!
+    /Welcome {{$store.state.signedUsername}}!
   </template> 
- <router-link to='/changePersonalImfornation' > <el-button type="success" size="small">修改个人信息</el-button></router-link>
+ <router-link to='/changePersonalImfornation' v-if="$store.state.signed"> <el-button type="success" size="small">修改个人信息</el-button></router-link>
   </div></el-col>
   </el-row>
 

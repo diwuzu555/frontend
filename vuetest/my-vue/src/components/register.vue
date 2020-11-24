@@ -55,14 +55,38 @@ import axios from "axios";
     },
     methods: {
         postuser(){
-         
-        let data = {"id":this.saveId,"password":this.savePassword,"username":this.saveName,"email":this.saveEmail};
-        axios.post('api/user/save',data)
+           var patt1=new RegExp("^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$");
+         if(patt1.test(this.signPassword))
+         {
+          if(this.savePassword!=this.save2Password)
+          { 
+            alert("确定密码不一致");
+             }
+             else{
+        let data = {"userId":this.saveId,"password":this.savePassword,"name":this.saveName,"email":this.saveEmail};
+        axios.post('api/user/register',data)
         .then(res=>{
-         console.log('res=>',res);            
+         
+          
+         console.log('res=>',res); 
+         alert("注册成功"); 
+         this.$router.push('/'); 
+          
+         
          }).catch(err => {
         console.log(err);
+         alert("注册失败");
+               
        });
+       }
+         }
+         else
+         {
+           alert('密码格式错误')
+         }
+
+
+
       }
       ,
        
