@@ -11,9 +11,9 @@
 <el-form ref="form" :model="form" label-width="80px" >
   <div class="row">
     <el-row :gutter="20"  >
-  <el-col :span="6"><div><el-form-item label="issue NO:" prop="text1"> <el-input type="text" placeholder="请输入内容" v-model="form.text1"  maxlength="30" show-word-limit >
+  <el-col :span="6"><div><el-form-item label="issue NO:" prop="Id"> <el-input type="text" placeholder="请输入内容" v-model="form.Id"  maxlength="30" show-word-limit >
     </el-input></el-form-item></div></el-col>
-    <el-col :span="6"><div><el-form-item label="issue状态:" prop="region"> <el-select v-model="form.region" placeholder="活动区域">
+    <el-col :span="6"><div><el-form-item label="issue状态:" prop="Status"> <el-select v-model="form.Status" placeholder="选择状态">
       <el-option label="待解决" value="待解决"></el-option>
       <el-option label="待验证" value="待验证"></el-option>
       <el-option label="已关闭" value="已关闭"></el-option>
@@ -21,6 +21,7 @@
     <el-col :span="4"><div><el-form-item label="创建时间:" prop="value1"> <el-date-picker
       v-model="form.value1"
       type="daterange"
+      value-format="yyyy/MM/dd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期">
@@ -29,13 +30,14 @@
   </div>
   <div class="row">
  <el-row :gutter="20" >
-  <el-col :span="6"><div><el-form-item label="创建人:" prop="text3"> <el-input type="text" placeholder="请输入内容" v-model="form.text3"  maxlength="30" show-word-limit >
+  <el-col :span="6"><div><el-form-item label="创建人:" prop="Create"> <el-input type="text" placeholder="请输入内容" v-model="form.Create"  maxlength="30" show-word-limit >
     </el-input></el-form-item></div></el-col>
-    <el-col :span="6"><div><el-form-item label="修改人:" prop="text4"> <el-input type="text" placeholder="请输入内容" v-model="form.text4"  maxlength="30" show-word-limit >
+    <el-col :span="6"><div><el-form-item label="修改人:" prop="Modify"> <el-input type="text" placeholder="请输入内容" v-model="form.Modify"  maxlength="30" show-word-limit >
     </el-input></el-form-item></div></el-col>
     <el-col :span="4"><div><el-form-item label="修改时间:" prop="value3"> <el-date-picker
       v-model="form.value3"
       type="daterange"
+      value-format="yyyy/MM/dd"
       range-separator="至"
       start-placeholder="开始日期"
       end-placeholder="结束日期">
@@ -86,6 +88,7 @@
       prop="iCreateTime"
       label="创建时间"
       >
+      <template slot-scope="scope">{{moment(scope.row.iCreateTime).format('YYYY-MM-DD')}}</template>
     </el-table-column>
     <el-table-column
       prop="reviser"
@@ -101,11 +104,13 @@
       prop="planTime"
       label="计划完成时间"
       >
+      <template slot-scope="scope">{{moment(scope.row.planTime).format('YYYY-MM-DD')}}</template>
     </el-table-column>
    <el-table-column
       prop="actualTime"
       label="实际完成时间"
       >
+      <template slot-scope="scope">{{moment(scope.row.actualTime).format('YYYY-MM-DD')}}</template>
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
@@ -151,26 +156,109 @@ import axios from 'axios';
            PageSize:20,
            total:0,
             form:{
-        text1: '',
-        region:'',
-        text3: '',
-        text4:'',
+        Id: '',
+        Status:'',
+        Create: '',
+        Modify:'',
         textarea: '',
         value1: '',
-        value2: '',
         value3: '',
-        value4: ''
        } ,
        
       }
     },
 
+     //报表跳转后的页面初始化
      created(){
-        this.getTabelInfo()
+       if(this.$route.params.founder!=undefined){
+         this.getTabelInfo2()
+       }
+      //  this.getTabelInfo()
       },
 
     methods: {
 
+      Details(index,row){
+        axios.get('/api/issue/queryIssue', { params: { issueId: row.issueId } }).then(res => {
+         
+           this.$store.commit('seleFun',res);
+           
+          this.$router.push('/HelloWorld_xinIssue');
+
+
+
+        }).catch(err => {
+        alert("有问题");
+       });
+
+          
+            
+
+
+
+
+
+
+      },
+
+      Edit(index,row){
+   
+         if(this.$store.state.signedUsername==row.founder)
+         {
+            axios.get('/api/issue/queryIssue', { params: { issueId: row.issueId } }).then(res => {
+              console.log('qqqqqqqqqqqqqqqqqqqq');
+              console.log(res);
+              console.log('qqqqqqqqqqqqqqqqqqqq');
+         
+           this.$store.commit('founFun',res);
+           
+          this.$router.push('/HelloWorld_xinIssue');
+
+
+
+        }).catch(err => {
+        alert("有问题");
+       });
+
+          
+            
+
+
+         }
+         else if(this.$store.state.signedUsername==row.reviser)
+         {
+           console.log(row);
+           
+
+
+
+           axios.get('/api/issue/queryIssue', {
+                params: {
+                    issueId: row.issueId
+
+                }
+            }) .then(res => {
+              console.log('bbbbbbb');
+              console.log(res)
+            
+           this.$store.commit('editFun',res);
+           this.$router.push('/HelloWorld_xinIssue');
+            
+            }).catch(err => {
+                console.log("有问题");
+            })
+            
+
+
+         }
+       
+       
+        
+       
+      },
+
+
+    
       getTabelInfo(){
             
              // let _that = this;
@@ -188,27 +276,41 @@ import axios from 'axios';
                 });
             })
         },
+        //报表的跳转后页面
+        getTabelInfo2(){
+            axios.get('/api/issue/queryIssue',{params:{founder:this.$route.params.founder}})
+                .then(response =>{
+                    this.tableData=[];
+                    this.total=response.data.length;
+                    this.tableData=response.data;
+            }).catch(err=>{
+                this.$message({
+                    message: '列表数据获取失败',
+                    type: 'success'
+                });
+            })
+        },
 
+//模糊查询
     submitForm() {  
-      // let data = {"issueId":this.form.text1,
-      //       "founder":this.form.text3,
-      //       "issueStatus": "this.form.region",
-      //       "reviser":this.form.text4};
+      console.log(this.form.value3[0]);
             axios.get('/api/issue/queryIssue', 
             {
           params: {
-            issueId:this.form.text1,
-            founder:this.form.text3,
-            issueStatus: this.form.region,
-            reviser:this.form.text4,
-
+            issueId:this.form.Id,
+            founder:this.form.Create,
+            issueStatus: this.form.Status,
+            reviser:this.form.Modify,
+            iCreateTime1:this.form.value1[0],
+            iCreateTime2:this.form.value1[1],
+             actualTime1:this.form.value3[0],
+             actualTime2:this.form.value3[1],
            }
          })
-             
                 .then(response =>{
                   this.tableData=[];
                   this.total=response.data.length;
-                    this.tableData.push(response.data);
+                    this.tableData=response.data;
                     console.log(response.data)
             }).catch(err=>{
                 this.$message({

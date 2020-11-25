@@ -17,39 +17,44 @@
     
       <div :inline="true">
         用户ID
-        <el-input v-model="searchId" placeholder="用户Id" style="width:240px"></el-input>
+        <el-input v-model="searchId" placeholder="用户Id" style="width:240px" maxlength='30'></el-input>
         用户姓名
-        <el-input v-model="searchName" placeholder="用户姓名" style="width:240px"></el-input>
+        <el-input v-model="searchName" placeholder="用户姓名" style="width:240px" maxlength='30'></el-input>
       </div>
+      <br>
       <div align='center'>
-        <el-button type="primary" @click="getList1">查询</el-button>
+        <el-button type="primary" @click="getList">查询</el-button>
         <el-button @click="clearall">清空</el-button>
       </div>
 
       <el-divider></el-divider>
-
         统计报表
       <el-divider></el-divider>
 
-    <el-table :data="tableDataEnd">
-      <el-table-column label="□"></el-table-column>
-      <el-table-column type="index" label="序号"></el-table-column>
-      <el-table-column label="用户ID" prop="issueId"></el-table-column>
+    <el-table :data="tableDataEnd.slice((currentPage-1)*PageSize,currentPage*PageSize)" @cell-click='handle'>
+      <el-table-column label="□" width="120" align="center">
+          <el-checkbox></el-checkbox>
+      </el-table-column>
+      <el-table-column type="index" label="序号" width="180"></el-table-column>
+      <el-table-column label="用户ID" prop="userId1"></el-table-column>
       <el-table-column label="用户姓名" prop="founder"></el-table-column>
-      <el-table-column label="创建Issue数" prop="create_number"></el-table-column>
-      <el-table-column label="收到Issue数" prop="receive_number"></el-table-column>
-      <el-table-column label="修改Issue数" prop="update_number"></el-table-column>
-      <el-table-column label="完成率" prop="completion_rate"></el-table-column>
+      <el-table-column label="创建Issue数" prop="crtCnt"></el-table-column>
+      <el-table-column label="收到Issue数" prop="slvCnt"></el-table-column>
+      <el-table-column label="修改Issue数" prop="tttCnt"></el-table-column>
+      <el-table-column label="完成率" prop="percent"></el-table-column>
     </el-table>
+    <el-footer class="footer">
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[1,2]"
-      :page-size="pageSize"
+      :page-sizes="[10,20]"
+      :page-size="PageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="totalItems">
+      :total="totalItems"
+      background>
     </el-pagination>
+    </el-footer>
   </div>
 </template>
 
@@ -62,71 +67,64 @@ import axios from "axios";
         searchName:"",
         tableDataEnd: [],
         currentPage: 1,
-        pageSize: 1,
+        PageSize: 20,
         totalItems: 0,
       };
     },
-
     //页面初始数据
-    // created(){
-    //   this.getlistIssue();
-    // },
-
+    created(){
+      this.getList();
+    },
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        this.pageSize = val;
-        // this.handleCurrentChange(this.currentPage);
+        this.PageSize = val
         this.currentPage=1
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.currentPage = val;
+        this.currentPage = val
       },
-      getList1(){
+      //读取报表数据
+      getList(){
         axios
-        .get('api/issue/queryIssue',{ params: { userId1: this.searchId } })
+        .get('api/issue/formIssue',{ params: { userId1: this.searchId, founder:this.searchName} })
         .then(res => {
-                
+          for(var i=0;i<res.data.length;i++){
+            if(res.data[i].percent!=null){
+              res.data[i].percent=res.data[i].percent + '%'
+            }
+          }
+          this.totalItems=res.data.length;
           this.tableDataEnd=res.data;
-          console.log('kaishi');
-          console.log(this.tableDataEnd);
-          
-          this.$message({
-            message: '查询成功',
-            type: 'success'
-          })
           }).catch(err => {
             this.$message({
               message: '查询失败',
-              type: 'warning'
+              type: 'error'
             });
             console.log("...err...",err)
           });
       },
-      //获取所有数据
-      getlistIssue() {
-        axios
-        .get('api/issue/listIssue')
-        .then(res => {
-          console.log(res.data[0]); 
-          this.totalItems=res.data.length;
-          this.tableDataEnd=res.data;
-        })
-        .catch(err=>{
-          this.$message({
-            message: '列表数据获取失败',
-            type: 'warning'
-          });
-          console.log("...err...",err)
-        })               
+      //点击创建数收到数修改数，跳转至list页面
+      handle(row,column){
+        if(column.label=="创建Issue数" || 
+           column.label=="收到Issue数" || 
+           column.label=="修改Issue数"){
+             this.$router.push({name:'list',params:{founder:row.founder}})
+        }
       },
       //清空按钮及重获所有数据
       clearall(){
         this.searchId="";
         this.searchName="";
-        this.getlistIssue();
-      }
+        this.getList();
+      },
     }
   };
 </script>
+
+<style >
+.footer{
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+</style>

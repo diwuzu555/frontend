@@ -51,9 +51,10 @@
       >
     </el-table-column>
     <el-table-column
-      prop="createTime"
+      prop="uCreateTime"
       label="注册时间"
       >
+     <template slot-scope="scope">{{moment(scope.row.uCreateTime).format('YYYY-MM-DD')}}</template>
     </el-table-column>
     <el-table-column
       prop="identity"

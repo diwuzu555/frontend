@@ -39,6 +39,7 @@ import axios from "axios";
       return {
         signPassword: '',
         signId:'',
+      
 
       }
     },
@@ -47,14 +48,28 @@ import axios from "axios";
          var patt1=new RegExp("^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$");
          if(patt1.test(this.signPassword))
          {
-        axios.get('api/user/queryUser', { params: { userId : this.signId } }).then(res => {
+        axios.get('/api/user/queryUser?name=' , {
+          params: {
+            userId:this.signId,
+            
+           }
+         }) .then(res => {
+          // console.log('ssss');
+       
          
         if(res.data[0].password==this.signPassword)
         {
           if(res.data[0].status=='激活'){
         alert("登录成功");
         var username1=res.data[0].name;
-        this.$store.commit('sign',username1);
+
+         var identity1=res.data[0].identity;
+
+         console.log(identity1);
+        this.$store.commit('sign',username1,res.data[0].userId);
+
+        // var identity1=res.date[0].identity;
+        this.$store.commit('body',identity1);
         
         this.$router.push('/');
        }
@@ -63,7 +78,8 @@ import axios from "axios";
         }
         else
         {alert("登录失败");}
-        }).catch(err => {
+        })
+        .catch(err => {
         alert("用户不存在或密码错误");
        });
       }

@@ -10,7 +10,7 @@
   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" ><div class="grid-content bg-purple" style="margin-bottom:50px" ></div></el-col>
   
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" ><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
-   登录ID：<el-input disabled="true" v-model="changeId" maxLength=30 placeholder="请输入内容" style="width:300px"></el-input>
+   登录ID：<el-input disabled="true" v-model='this.$store.state.signedId' maxLength=30  style="width:300px">{{$store.state.signedId}}</el-input>
    </div></el-col>
    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"><div class="grid-content bg-purple" style="text-align:center;margin-bottom:20px">
    姓名：<el-input v-model="changeName" maxLength=20 placeholder="请输入内容" style="width:300px"></el-input>
@@ -44,7 +44,7 @@ import axios from "axios";
     data() {
       return {
         
-        changeId: '',
+        changeId: this.$store.state.signedId,
         changeName: '',
         changeEmail: '',
         changePassword: '',
@@ -62,7 +62,7 @@ import axios from "axios";
           }
            else
           {
-         let data={"userId":this.changeId,"password":this.changePassword,"email":this.changeEmail,"name":this.changeName};
+         let data={"userId":this.changeId,"name":this.changeName,"email":this.changeEmail,"password":this.changePassword};
         axios.put('api/user/updateUser', data).then(res => {
          
             alert("修改成功");
@@ -74,6 +74,38 @@ import axios from "axios";
        });
       }
      
+
+
+
+
+
+
+
+
+//  handleEdit(index,row){
+//          this.formSelect=row;
+//          let data = {"userId":this.formSelect.userId,"status":"注销"};
+//         axios.put('api/user/updateUser', data)
+//         .then(res=>{
+//           this.submitForm();
+//          console.log('res=>',res);            
+//          }).catch(err => {
+//         console.log(err);
+//        });
+       
+//       },
+
+
+
+
+
+
+
+
+
+
+
+
     
     }
   }

@@ -12,19 +12,27 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+import moment from 'moment'
+
 Vue.use(ElementUI);
+
+
+Vue.use(require('vue-moment'));
+Vue.prototype.moment = moment
 
 new Vue({
     el: '#app',
     router,
-    data:{},
+    data: {},
     store,
-    
+
     render: h => h(App),
-  
+
 });
 
-
+// Vue.filter('dateYMDHMSFormat', function(dateStr, pattern = 'YYYY-MM-DD') {
+//     return moment(dateStr).format(pattern);
+// })
 
 
 
